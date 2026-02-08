@@ -1,0 +1,78 @@
+﻿services:
+  postgres:
+    image: timescale/timescaledb:latest-pg16
+    container_name: hive-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-hive_dynamics}
+      POSTGRES_USER: ${POSTGRES_USER:-hive_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secure}
+      POSTGRES_INITDB_ARGS: "-c max_connections=200"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - hive-network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  redis:
+    image: redis:7-alpine
+    container_name: hive-redis
+    command: redis-server --maxmemory 2gb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - hive-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: hive-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@hive.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - hive-network
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: hive-redis-commander
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - hive-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  hive-network:
+    driver: bridge

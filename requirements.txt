@@ -1,0 +1,52 @@
+﻿# Computer Vision - YOLO from Hugging Face
+ultralytics==8.3.0
+opencv-python>=4.9.0
+supervision==0.24.0
+psycopg2-binary==2.9.9
+python-dotenv==1.0.1
+
+# Tracking & Processing
+numpy==1.26.4
+scipy==1.13.0
+pandas==2.2.2
+
+# Agent Framework (LangGraph)
+langgraph==0.2.34
+langchain==0.3.0
+langchain-core==0.3.1
+langchain-huggingface==0.1.0
+huggingface_hub==0.26.0
+transformers==4.46.0
+
+# Database
+psycopg[binary,pool]==3.2.1
+sqlalchemy==2.0.35
+asyncpg==0.29.0
+sqlalchemy-utils==0.41.2
+
+# Analytics
+matplotlib==3.9.2
+seaborn==0.13.2
+plotly==5.24.0
+
+# API & Web
+fastapi==0.115.0
+uvicorn==0.31.0
+streamlit==1.39.0
+pydantic==2.8.2
+
+# Cache & Queue
+redis==5.1.1
+celery[redis]==5.4.0
+
+# Monitoring & Logging
+python-dotenv==1.0.1
+pyyaml==6.0.2
+python-json-logger==2.0.7
+APScheduler==3.10.4
+
+# Testing
+pytest==7.4.4
+pytest-asyncio==0.23.3
+
+shapely

@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+.env
+*.log
+
+# Virtual envs
+env/
+venv/
+.hive-dynamics/
+*.sqlite
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data/videos
+data/videos/
+data/output/
