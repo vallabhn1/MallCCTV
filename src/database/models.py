@@ -30,7 +30,7 @@ class Alert(Base):
     acknowledged = Column(Boolean, default=False)
 
 class PeakHourAnalytics(Base):
-    __tablename__ = "peakhouranalytics"
+    __tablename__ = "peak_hour_analytics"
     
     id = Column(Integer, primary_key=True)
     camera_id = Column(String(50), index=True)
